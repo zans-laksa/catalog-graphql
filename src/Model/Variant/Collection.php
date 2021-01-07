@@ -253,7 +253,33 @@ class Collection
     }
 
     protected function getSearchCriteria(array $childrenIds): SearchCriteriaInterface {
-        // build a search criteria based on original one and filter of product ids
+//        $filterGroups = $this->searchCriteria->getFilterGroups();
+//
+//        $skip = [
+//            'category_url_path',
+//            'category_id',
+//            'price',
+//            'customer_group_id'
+//        ];
+//
+//        foreach ($filterGroups as $filterGroup) {
+//            $filters = $filterGroup->getFilters();
+//
+//            foreach ($filters as $filter) {
+//                $field = $filter->getField();
+//
+//                if (in_array($field, $skip)) {
+//                    continue;
+//                }
+//
+//                $this->searchCriteriaBuilder->addFilter(
+//                    $filter->getField(),
+//                    $filter->getValue(),
+//                    $filter->getConditionType()
+//                );
+//            }
+//        }
+
         return $this->searchCriteriaBuilder
             ->addFilter('entity_id', $childrenIds, 'in')
             ->create();
@@ -296,7 +322,8 @@ class Collection
         $products = $collection->getItems();
         $productsToProcess = [];
 
-        $isReturnSingleChild = $this->getIsReturnSingleChild(true);
+        //$isReturnSingleChild = $this->getIsReturnSingleChild(true);
+        $isReturnSingleChild = $this->getIsReturnSingleChild();
 
         if ($isReturnSingleChild) {
             foreach ($this->parentProducts as $parentProduct) {
